@@ -1,0 +1,20 @@
+scalar Date
+
+type Query{
+    countries: [Country!]
+}
+
+type Mutation{
+    create(input: CountryInput!): Country!
+    update(input: CountryInput!): Country!
+}
+
+type Country{
+    code: String!
+    name: String
+}
+
+input CountryInput{
+    code: String!
+    name: String
+}
