@@ -1,6 +1,7 @@
 package guru.qa.countries.data;
 
 import guru.qa.countries.domain.Country;
+import guru.qa.countries.domain.CountryInput;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -49,6 +50,13 @@ public class CountryEntity {
     }
 
     public static CountryEntity toEntity(Country country){
+        CountryEntity countryEntity = new CountryEntity();
+        countryEntity.setCode(country.code());
+        countryEntity.setName(country.name());
+        return countryEntity;
+    }
+
+    public static CountryEntity fromInputToEntity(CountryInput country){
         CountryEntity countryEntity = new CountryEntity();
         countryEntity.setCode(country.code());
         countryEntity.setName(country.name());

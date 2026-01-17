@@ -26,6 +26,7 @@ dependencies {
     implementation 'org.flywaydb:flyway-database-postgresql:10.17.1'
     implementation 'org.springframework.boot:spring-boot-starter-graphql'
     implementation 'com.tailrocks.graphql:graphql-datetime-spring-boot-starter:6.0.0'
+    implementation 'org.projectlombok:lombok:1.18.30'
     runtimeOnly 'org.postgresql:postgresql:42.7.3'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
