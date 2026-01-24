@@ -2,6 +2,8 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.9'
 	id 'io.spring.dependency-management' version '1.1.7'
+    id 'com.apollographql.apollo' version '4.1.0'
+    id 'com.google.protobuf' version '0.9.4'
 }
 
 group = 'guru.qa'
@@ -14,8 +16,17 @@ java {
 	}
 }
 
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.grpc:spring-grpc-dependencies:0.4.0-SNAPSHOT'
+    }
+}
+
 repositories {
-	mavenCentral()
+    mavenLocal()
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/snapshot' }
 }
 
 dependencies {
@@ -27,9 +38,34 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-graphql'
     implementation 'com.tailrocks.graphql:graphql-datetime-spring-boot-starter:6.0.0'
     implementation 'org.projectlombok:lombok:1.18.30'
+    implementation 'org.springframework.grpc:spring-grpc-spring-boot-starter'
+    implementation 'io.grpc:grpc-services:1.75.0'
+    implementation("io.grpc:grpc-protobuf:1.75.0") {
+        exclude group: 'com.google.protobuf'
+    }
+    implementation "com.google.protobuf:protobuf-java-util:${dependencyManagement.importedProperties['protobuf-java.version']}"
+
     runtimeOnly 'org.postgresql:postgresql:42.7.3'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:${dependencyManagement.importedProperties['protobuf-java.version']}"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${dependencyManagement.importedProperties['grpc.version']}"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {
+                option '@generated=omit'
+            }
+        }
+    }
 }
 
 tasks.named('test') {
