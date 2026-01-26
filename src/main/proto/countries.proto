@@ -11,8 +11,8 @@ option java_package = "guru.qa.grpc.countries";
 option java_outer_classname = "CountriesProto";
 
 service CountriesService{
-  rpc AllCountries(google.protobuf.Empty) returns (CountriesResponse){}
-  rpc AddCountry(stream CountryRequest) returns (stream AddCountriesResponse){}
+  rpc GetAllCountries(google.protobuf.Empty) returns (CountriesResponse){}
+  rpc AddCountry(stream CountryRequest) returns (AddCountriesResponse){}
   rpc UpdateCountry(CountryRequest) returns (CountryResponse){}
 }
 
