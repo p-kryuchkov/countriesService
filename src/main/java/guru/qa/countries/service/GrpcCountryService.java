@@ -19,7 +19,7 @@ public class GrpcCountryService extends CountriesServiceGrpc.CountriesServiceImp
     }
 
     @Override
-    public void allCountries(Empty request, StreamObserver<CountriesResponse> responseObserver) {
+    public void getAllCountries(Empty request, StreamObserver<CountriesResponse> responseObserver) {
         List<CountryResponse> countries = countryService.allCountries()
                 .stream()
                 .map(country -> CountryResponse.newBuilder()
